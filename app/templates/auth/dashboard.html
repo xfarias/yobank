@@ -1,0 +1,67 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">YoBank</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Profile</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+          <h1 class="page-header">Welcome, {{ name }}</h1>
+           <script type="text/javascript">
+            var username = {{ users | tojson}}
+        </script>
+         <canvas id="myChart" style="max-width: 700px; margin: 0 auto;"></canvas>
+          <div class="table-responsive">
+            {% for u in users %}
+            <table class="table table-striped">
+              <thead>
+                <tr>
+
+                  <th>Nome</th>
+                  <th>Saldo Disponível</th>
+                  <th>Emprestimos</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{u.username}}</td>
+                  <td>{{u.credit}}</td>
+                  <td>{{u.debt}}</td>
+                </tr>
+              </tbody>
+            </table>
+            {% endfor %}
+          </div>
+        </div>
+
+    </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
